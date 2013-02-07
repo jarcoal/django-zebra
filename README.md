@@ -185,6 +185,14 @@ To use in a template:
 
 That's it - all the stripe tokeny goodness happens, and errors are displayed to your users.
 
+If you would prefer to use [Stripe's checkout script](https://stripe.com/docs/checkout), there is a template tag for that as well:
+
+```
+{% zebra_checkout_script name='ZebraCo' description='100 packs of gum' amount=5000 %}
+```
+
+All [parameters](https://stripe.com/docs/checkout) are supported.
+
 ## Models and Mixins ##
 
 Model and Mixin docs coming.  For now, the code is pretty self-explanatory, and decently documented inline.
