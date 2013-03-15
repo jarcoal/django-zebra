@@ -1,17 +1,6 @@
 """
 Provides the following signals:
 
-V1
-
-- zebra_webhook_recurring_payment_failed
-- zebra_webhook_invoice_ready
-- zebra_webhook_recurring_payment_succeeded
-- zebra_webhook_subscription_trial_ending
-- zebra_webhook_subscription_final_payment_attempt_failed
-- zebra_webhook_subscription_ping_sent
-
-v2
-
 - zebra_webhook_charge_succeeded
 - zebra_webhook_charge_failed
 - zebra_webhook_charge_refunded
@@ -45,48 +34,39 @@ v2
 """
 import django.dispatch
 
-WEBHOOK_ARGS = ["customer", "full_json"]
 
-zebra_webhook_recurring_payment_failed = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
-zebra_webhook_invoice_ready = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
-zebra_webhook_recurring_payment_succeeded = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
-zebra_webhook_subscription_trial_ending = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
-zebra_webhook_subscription_final_payment_attempt_failed = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
-zebra_webhook_subscription_ping_sent = django.dispatch.Signal(providing_args=[])
+WEBHOOK_ARGS = ["full_json"]
 
-# v2 webhooks
-WEBHOOK2_ARGS = ["full_json"]
-
-zebra_webhook_charge_succeeded = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_charge_failed = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_charge_refunded = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_charge_disputed = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_customer_created = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_customer_updated = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_customer_deleted = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_customer_subscription_created = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_customer_subscription_updated = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_customer_subscription_deleted = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_customer_subscription_trial_will_end = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_customer_discount_created = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_customer_discount_updated = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_customer_discount_deleted = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_invoice_created = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_invoice_updated = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_invoice_payment_succeeded = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_invoice_payment_failed = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_invoiceitem_created = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_invoiceitem_updated = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_invoiceitem_deleted = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_plan_created = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_plan_updated = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_plan_deleted = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_coupon_created = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_coupon_updated = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_coupon_deleted = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_transfer_created = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_transfer_failed = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
-zebra_webhook_ping = django.dispatch.Signal(providing_args=WEBHOOK2_ARGS)
+zebra_webhook_charge_succeeded = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_charge_failed = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_charge_refunded = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_charge_disputed = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_customer_created = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_customer_updated = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_customer_deleted = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_customer_subscription_created = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_customer_subscription_updated = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_customer_subscription_deleted = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_customer_subscription_trial_will_end = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_customer_discount_created = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_customer_discount_updated = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_customer_discount_deleted = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_invoice_created = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_invoice_updated = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_invoice_payment_succeeded = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_invoice_payment_failed = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_invoiceitem_created = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_invoiceitem_updated = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_invoiceitem_deleted = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_plan_created = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_plan_updated = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_plan_deleted = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_coupon_created = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_coupon_updated = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_coupon_deleted = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_transfer_created = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_transfer_failed = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
+zebra_webhook_ping = django.dispatch.Signal(providing_args=WEBHOOK_ARGS)
 
 WEBHOOK_MAP = {
     'charge_succeeded': zebra_webhook_charge_succeeded,
