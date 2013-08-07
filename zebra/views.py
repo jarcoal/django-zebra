@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import get_model
+from django.views.generic import RedirectView
+from urllib import urlencode
 
 import json, stripe, logging
 
@@ -40,3 +42,39 @@ def webhooks(request):
 
 #backwards compat
 webhooks_v2 = webhooks
+
+class OAuth2RedirectView(RedirectView):
+    """
+    Redirects the client to Stripe to authorize an oauth token.
+    """
+
+    url = 'https://connect.stripe.com/oauth/authorize'
+    permanent = False
+    response_type = 'code'
+    scope = 'read_write'
+    client_id = options.STRIPE_CLIENT_ID
+    redirect_uri = options.STRIPE_REDIRECT_URI
+
+    def get_redirect_url(self):
+        """
+        """
+        params = {
+            'scope': self.get_scope(),
+            'client_id': self.get_client_id(),
+            'redirect_uri': self.get_redirect_uri(),
+            'response_type': self.get_response_type(),
+        }
+
+        return self.url + '?' + urlencode(params)
+
+    def get_response_type(self):
+        return self.response_type
+
+    def get_client_id(self):
+        return self.client_id
+
+    def get_scope(self):
+        return self.scope
+
+    def get_redirect_uri(self):
+        return self.redirect_uri

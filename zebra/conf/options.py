@@ -4,36 +4,29 @@ Default settings for zebra
 import datetime
 import os
 
-from django.conf import settings as _settings
+from django.conf import settings
 
 
-if hasattr(_settings, 'STRIPE_PUBLISHABLE'):
-    STRIPE_PUBLISHABLE = getattr(_settings, 'STRIPE_PUBLISHABLE')
-else:
-    try:
-        STRIPE_PUBLISHABLE = os.environ['STRIPE_PUBLISHABLE']
-    except KeyError:
-        STRIPE_PUBLISHABLE = ''
+STRIPE_PUBLISHABLE = getattr(settings, 'STRIPE_PUBLISHABLE', os.environ.get('STRIPE_PUBLISHABLE', ''))
+STRIPE_SECRET = getattr(settings, 'STRIPE_SECRET', os.environ.get('STRIPE_SECRET', ''))
 
-if hasattr(_settings, 'STRIPE_SECRET'):
-    STRIPE_SECRET = getattr(_settings, 'STRIPE_SECRET')
-else:
-    try:
-        STRIPE_SECRET = os.environ['STRIPE_SECRET']
-    except KeyError:
-        STRIPE_SECRET = ''
+#oauth
+STRIPE_CLIENT_ID = getattr(settings, 'STRIPE_CLIENT_ID', os.environ.get('STRIPE_CLIENT_ID', ''))
+STRIPE_CLIENT_SECRET = getattr(settings, 'STRIPE_CLIENT_SECRET', os.environ.get('STRIPE_CLIENT_SECRET', ''))
+STRIPE_REDIRECT_URI = getattr(settings, 'STRIPE_REDIRECT_URI', os.environ.get('STRIPE_REDIRECT_URI', ''))
 
-ZEBRA_ENABLE_APP = getattr(_settings, 'ZEBRA_ENABLE_APP', False)
-ZEBRA_AUTO_CREATE_STRIPE_CUSTOMERS = getattr(_settings,
+
+ZEBRA_ENABLE_APP = getattr(settings, 'ZEBRA_ENABLE_APP', False)
+ZEBRA_AUTO_CREATE_STRIPE_CUSTOMERS = getattr(settings,
     'ZEBRA_AUTO_CREATE_STRIPE_CUSTOMERS', True)
 
 _today = datetime.date.today()
-ZEBRA_CARD_YEARS = getattr(_settings, 'ZEBRA_CARD_YEARS',
+ZEBRA_CARD_YEARS = getattr(settings, 'ZEBRA_CARD_YEARS',
     range(_today.year, _today.year+12))
-ZEBRA_CARD_YEARS_CHOICES = getattr(_settings, 'ZEBRA_CARD_YEARS_CHOICES',
+ZEBRA_CARD_YEARS_CHOICES = getattr(settings, 'ZEBRA_CARD_YEARS_CHOICES',
     [(i,i) for i in ZEBRA_CARD_YEARS])
 
-ZEBRA_MAXIMUM_STRIPE_CUSTOMER_LIST_SIZE = getattr(_settings,
+ZEBRA_MAXIMUM_STRIPE_CUSTOMER_LIST_SIZE = getattr(settings,
     'ZEBRA_MAXIMUM_STRIPE_CUSTOMER_LIST_SIZE', 100)
 
 _audit_defaults = {
@@ -46,14 +39,11 @@ _audit_defaults = {
     'cancelled': 'cancelled'
 }
 
-ZEBRA_AUDIT_RESULTS = getattr(_settings, 'ZEBRA_AUDIT_RESULTS', _audit_defaults)
+ZEBRA_AUDIT_RESULTS = getattr(settings, 'ZEBRA_AUDIT_RESULTS', _audit_defaults)
 
-ZEBRA_ACTIVE_STATUSES = getattr(_settings, 'ZEBRA_ACTIVE_STATUSES',
+ZEBRA_ACTIVE_STATUSES = getattr(settings, 'ZEBRA_ACTIVE_STATUSES',
     ('active', 'past_due', 'trialing'))
-ZEBRA_INACTIVE_STATUSES = getattr(_settings, 'ZEBRA_INACTIVE_STATUSES',
+ZEBRA_INACTIVE_STATUSES = getattr(settings, 'ZEBRA_INACTIVE_STATUSES',
     ('cancelled', 'suspended', 'unpaid', 'no_subscription'))
 
-if ZEBRA_ENABLE_APP:
-    ZEBRA_CUSTOMER_MODEL = getattr(_settings, 'ZEBRA_CUSTOMER_MODEL', 'zebra.Customer')
-else:
-    ZEBRA_CUSTOMER_MODEL = getattr(_settings, 'ZEBRA_CUSTOMER_MODEL', None)
+ZEBRA_CUSTOMER_MODEL = getattr(settings, 'ZEBRA_CUSTOMER_MODEL', 'zebra.Customer' if ZEBRA_ENABLE_APP else None)
